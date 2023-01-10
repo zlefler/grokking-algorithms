@@ -1,0 +1,7 @@
+These seem really complicated, but they're not too bad.
+The main thing to remember is that you're either going to
+1. start with a copy of the whole thing, if you're doing permutations, or
+2. start with the first character/integer/whatever if you're doing subsets
+
+and then you're going to make a copy of each permutation that you've already
+made and change it with the next char/int in the sequence.
