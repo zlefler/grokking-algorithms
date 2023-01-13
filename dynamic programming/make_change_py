@@ -1,0 +1,41 @@
+'''Given an integer representing a given amount of change, write a
+function to compute the total number of coins required to make
+that amount of change. You can assume that there is always a
+1¢ coin.'''
+coins = [10, 6, 1]
+
+
+def make_change_brute_force(c):
+    if c == 0:
+        return 0
+    min_coins = float('inf')
+    for coin in coins:
+        if c - coin >= 0:
+            curr_min_coins = make_change_brute_force(c - coin)
+            if curr_min_coins < min_coins:
+                min_coins = curr_min_coins
+    return min_coins + 1
+
+
+# print(make_change_brute_force(59)) # takes 10.475s
+
+def make_change_dp(c):
+    cache = {}
+    return _make_change(c, cache)
+
+
+def _make_change(c, cache):
+    if c in cache:
+        return cache[c]
+    min_coins = float('inf')
+
+    for coin in coins:
+        if c - coin >= 0:
+            curr_min_coins = _make_change(c - coin, cache)
+            if curr_min_coins < min_coins:
+                min_coins = curr_min_coins
+    cache[c] = min_coins + 1
+    return cache[c]
+
+
+print(make_change_dp(59))
