@@ -1,11 +1,14 @@
+from functools import lru_cache
+
 '''Given an integer representing a given amount of change, write a
 function to compute the total number of coins required to make
 that amount of change. You can assume that there is always a
 1¢ coin.'''
-coins = [10, 6, 1]
+
+coins = [1, 6, 10]
 
 
-def make_change_brute_force(c):
+def make_change_brute_force(coins, c):
     if c == 0:
         return 0
     min_coins = float('inf')
@@ -17,25 +20,24 @@ def make_change_brute_force(c):
     return min_coins + 1
 
 
-# print(make_change_brute_force(59)) # takes 10.475s
+# print(make_change_brute_force(coins, 59)) # takes 10.475s
 
-def make_change_dp(c):
-    cache = {}
-    return _make_change(c, cache)
+def make_change_dp(coins, amount):
+    @lru_cache(None)
+    def dp(i, amount):
+        if amount == 0:
+            return 0
+        if i == -1:
+            return float('inf')
+
+        ans = dp(i-1, amount)
+        if amount >= coins[i]:
+            ans = min(ans, dp(i, amount - coins[i]) + 1)
+        return ans
+
+    n = len(coins)
+    ans = dp(n-1, amount)
+    return ans if ans != float('inf') else -1
 
 
-def _make_change(c, cache):
-    if c in cache:
-        return cache[c]
-    min_coins = float('inf')
-
-    for coin in coins:
-        if c - coin >= 0:
-            curr_min_coins = _make_change(c - coin, cache)
-            if curr_min_coins < min_coins:
-                min_coins = curr_min_coins
-    cache[c] = min_coins + 1
-    return cache[c]
-
-
-print(make_change_dp(59))
+print(make_change_dp(coins, 59))
