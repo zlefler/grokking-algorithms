@@ -25,5 +25,3 @@ h1.next.next.next.next = ListNode(5)
 
 sol = Solution()
 print(sol.reverseList(h1))
-
-# 5 -> 4 -> x -> 4
