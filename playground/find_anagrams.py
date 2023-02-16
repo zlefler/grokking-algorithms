@@ -2,7 +2,7 @@ class Solution:
     def findAnagrams(self, s: str, p: str) -> list[int]:
         p_map = {}
         for char in p:
-            p_map[char] = p_map.get(p, 0) + 1
+            p_map[char] = p_map.get(char, 0) + 1
 
         l = r = 0
         indices = []
@@ -24,3 +24,9 @@ class Solution:
         if s_map == p_map:
             indices.append(l)
         return indices
+
+
+s1 = "baa"
+p1 = "aa"
+sol = Solution()
+print(sol.findAnagrams(s1, p1))
