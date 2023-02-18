@@ -1,18 +1,19 @@
 class Solution:
-    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
-        l = r = 0
-        sub_arrays = 0
-        while l < len(nums):
-            r = l
-            while r < len(nums):
-                product = 1
-                for num in nums[l:r+1]:
-                    product *= num
-                if product < k:
-                    sub_arrays += 1
-                    r += 1
-                else:
-                    l += 1
-                    break
-            l += 1
-        return sub_arrays
+    def numSubarrayProductLessThanK(self, nums: list[int], k: int) -> int:
+        if k <= 1:
+            return 0
+        prod = 1
+        ans = left = 0
+        for right, val in enumerate(nums):
+            prod *= val
+            while prod >= k:
+                prod /= nums[left]
+                left += 1
+            ans += right - left + 1
+        return ans
+
+
+n1 = [10, 5, 2, 6]
+k1 = 100
+sol = Solution()
+print(sol.numSubarrayProductLessThanK(n1, k1))
