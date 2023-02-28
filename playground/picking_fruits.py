@@ -24,4 +24,7 @@ class Solution:
 
 f1 = [1, 2, 1]
 sol = Solution()
-print(sol.totalFruit(f1))
+# print(sol.totalFruit(f1))
+
+bs = ((b'\x10'))
+print(bin(int(bs.hex(), 16)))
